@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMAP Digital Sign</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="app">
+        <header>
+            <div class="logo">AMAP</div>
+            <button class="search-trigger" onclick="toggleModal('modal-search', true)">
+                <i class="ph ph-magnifying-glass"></i>
+            </button>
+        </header>
+
+        <main>
+            <section class="promo">
+                <h2>Summer Sale: 60% Off mythic prisms</h2>
+                <div class="promo-video">
+                    <video autoplay muted loop>
+                        <source src="./videooro..mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </section>
+
+            <section class="map-section">
+                <div class="map-header">
+                    <span>Directory Map</span>
+                    <div class="level-controls">
+                        <button onclick="setLevel(0)" class="lvl-btn active" data-lvl="0">L0</button>
+                        <button onclick="setLevel(1)" class="lvl-btn" data-lvl="1">L1</button>
+                        <button onclick="setLevel(2)" class="lvl-btn" data-lvl="2">L2</button>
+                    </div>
+                </div>
+
+                <div class="map-viewport">
+                    <div id="map-canvas">
+                        <div class="map-layer l0" id="layer-0">
+                            <img src="./floor1.png" alt="Floor 0 Blueprint">
+                        </div>
+                        <div class="map-layer l1" id="layer-1">
+                            <img src="./floor2.png" alt="Floor 1 Blueprint">
+                        </div>
+                        <div class="map-layer l2" id="layer-2">
+                            <img src="./floor3.png" alt="Floor 2 Blueprint">
+                        </div>
+
+                        <div class="user-marker">
+                            <div class="dot"></div>
+                            <span class="marker-label">YOU</span>
+                        </div>
+                    </div>
+
+                    <div class="zoom-controls">
+                        <button class="zoom-btn" onclick="zoom(0.2)"><i class="ph ph-plus"></i></button>
+                        <button class="zoom-btn" onclick="zoom(-0.2)"><i class="ph ph-minus"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="nav-panel">
+                <div id="nav-home" class="nav-grid custom-scrollbar">
+                    <button class="nav-btn" onclick="showCat('shops')">Retail</button>
+                    <button class="nav-btn" onclick="showCat('food')">Dining</button>
+                    <button class="nav-btn" onclick="showCat('services')">Services</button>
+                    <button class="nav-btn" onclick="showCat('parking')">Parking</button>
+                </div>
+
+                <div id="nav-details" class="custom-scrollbar">
+                    <div class="details-header">
+                        <h3 id="cat-name">Category</h3>
+                        <button class="back-btn" onclick="hideCat()"><i class="ph ph-arrow-left"></i> BACK</button>
+                    </div>
+                    <div id="cat-list"></div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <button onclick="toggleModal('modal-info', true)"><i class="ph-fill ph-info"></i></button>
+            <button onclick="toggleModal('modal-access', true)"><i class="ph-fill ph-wheelchair"></i></button>
+            <button onclick="toggleModal('modal-help', true)"><i class="ph-fill ph-question"></i></button>
+        </footer>
+
+        <div id="modal-search" class="modal">
+            <div class="modal-header">
+                <h2>DIRECTORY SEARCH</h2>
+                <button class="close-btn" onclick="toggleModal('modal-search', false)"><i class="ph ph-x"></i></button>
+            </div>
+            <div class="modal-inner">
+                <div id="search-input"></div>
+                <div id="search-results" class="results-container"></div>
+                <div id="kb" class="kb-grid"></div>
+            </div>
+        </div>
+
+        <div id="modal-access" class="modal center-modal">
+            <div class="modal-inner access-inner">
+                <h2>ACCESSIBILITY</h2>
+                <button onclick="toggleAccessibility('text')" id="btn-text-toggle" class="toggle-container">
+                    <span>Large Text</span>
+                    <div class="switch"></div>
+                </button>
+                <button onclick="toggleAccessibility('audio')" id="btn-audio-toggle" class="toggle-container">
+                    <span>Audio Feedback</span>
+                    <div class="switch"></div>
+                </button>
+                <button onclick="toggleModal('modal-access', false)" class="modal-close-text">CLOSE</button>
+            </div>
+        </div>
+        
+        <div id="modal-info" class="modal center-modal">
+            <div class="modal-inner access-inner">
+                <h2>CENTRE INFORMATION</h2>
+                <div style="text-align: left; margin: 1rem 0; font-size: 0.9rem;">
+                    <p><strong>Opening Hours:</strong> 9am - 9pm</p>
+                    <p><strong>Emergency:</strong> Follow green exit signs.</p>
+                </div>
+                <button class="nav-btn" style="width: 100%; color: white; background: var(--red);" onclick="alert('The Nearest fire escapes are on L1, L2, and L3 all marked on the map')">FIRE ESCAPE MAP</button>
+                <button onclick="toggleModal('modal-info', false)" class="modal-close-text" style="margin-top: 1rem; border: none; background: none; font-weight: bold;">CLOSE</button>
+            </div>
+        </div>
+
+        <div id="modal-help" class="modal center-modal">
+            <div class="modal-inner access-inner">
+                <h2>NEED HELP?</h2>
+                <p style="margin: 1rem 0; font-size: 0.9rem; color: var(--slate-600);">
+                    Use the map to navigate floors. Tap "Retail" or "Dining" to see lists. 
+                    If you need immediate assistance, please visit the desk on Level 0.
+                </p>
+                <button onclick="toggleModal('modal-help', false)" class="modal-close-text" style="border: none; background: none; font-weight: bold;">GOT IT</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
